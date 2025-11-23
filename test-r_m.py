@@ -1,9 +1,7 @@
 import numpy as np
 
-M = 3
-
-def cal__r_m(input):
-  Rm = np.matrix([[None, None, None], [None, None, None], [None, None, None]])
+def cal__r_m(M, input):
+  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float64)
   for k in range(M):
     for l in range(M):
       startrange = abs(l - k)
@@ -15,6 +13,6 @@ def cal__r_m(input):
 
 if __name__ == "__main__":
   input = [4.0, 5.2, 6.5]
-  Rm = cal__r_m(input)
+  Rm = cal__r_m(3, input)
   print(f"input: {input}")
   print(f"output:\n{Rm}")
