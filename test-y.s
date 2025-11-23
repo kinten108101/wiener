@@ -26,7 +26,8 @@ y_k_loop:
 	add $t9, $t9, $t2
 	lwc1 $f4, 0($t9)		# -> h(k)
 	la $t9, input
-	sub $t2, $t0, $t1       # n - k
+	addi $t7, $t1, 1
+	sub $t2, $s0, $t7       # n - k - 1
 	sll $t2, $t2, 2
 	add $t9, $t9, $t2
 	lwc1 $f5, 0($t9)		# -> x(n-k)
