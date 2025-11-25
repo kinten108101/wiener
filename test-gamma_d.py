@@ -1,4 +1,4 @@
-def cal__gamma_d(M, desired, input):
+def cal__gamma_d(desired, input, *, M):
   gamma_d = [None for _ in range(M)]
   for l in range(M):
     acc = 0.0
@@ -10,7 +10,7 @@ def cal__gamma_d(M, desired, input):
 if __name__ == "__main__":
   desired = [1.0, 2.0, 3.0]
   input   = [4.0, 5.2, 6.5]
-  gamma_d = cal__gamma_d(3, desired, input)
+  gamma_d = cal__gamma_d(desired, input, M=3)
   print(f"input d(n):  {desired}")
   print(f"input x(n):  {input}")
   print(f"output:      {gamma_d}")

@@ -1,6 +1,6 @@
 import numpy as np
 
-def cal__r_m(M, input):
+def cal__r_m(input, *, M):
   Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float64)
   for k in range(M):
     for l in range(M):
@@ -13,6 +13,6 @@ def cal__r_m(M, input):
 
 if __name__ == "__main__":
   input = [4.0, 5.2, 6.5]
-  Rm = cal__r_m(3, input)
+  Rm = cal__r_m(input, M=3)
   print(f"input: {input}")
   print(f"output:\n{Rm}")
