@@ -3,7 +3,7 @@ def cal__y(input, h, *, M):
   for n in range(M):
     acc = 0.0
     for k in range(n + 1):
-      acc = acc + float(h[k]) * float(input[M - k - 1])
+      acc += float(h[k]) * float(input[M - k - 1])
     y[n] = acc
   return y
 
