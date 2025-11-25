@@ -1,7 +1,7 @@
 import numpy as np
 
 def cal__r_m(input, *, M):
-  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float64)
+  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
   for k in range(M):
     for l in range(M):
       startrange = abs(l - k)

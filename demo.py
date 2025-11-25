@@ -18,7 +18,7 @@ M = 10
 
 sigma2 = expectation(desired, M=M)
 gamma_d = cal__gamma_d(desired, input, M=M)
-gamma_d = np.matrix(gamma_d, dtype=np.float64)
+gamma_d = np.matrix(gamma_d, dtype=np.float32)
 gamma_d = gamma_d.T
 Rm  = cal__r_m(input, M=M)
 Rm_ = inv(Rm)
