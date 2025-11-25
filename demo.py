@@ -18,13 +18,14 @@ M = 10
 
 sigma2 = expectation(desired, M=M)
 gamma_d = cal__gamma_d(desired, input, M=M)
+gamma_d = np.matrix(gamma_d, dtype=np.float64)
+gamma_d = gamma_d.T
 Rm  = cal__r_m(input, M=M)
 Rm_ = inv(Rm)
 h = matmul(Rm_, gamma_d)
-gamma_d = np.matrix(gamma_d, dtype=np.float64)
 gamma_h_gamma = matmul(gamma_d.T, h)[0, 0]
 mmse = sigma2 - gamma_h_gamma
-y = cal__y(input, np.array(h.T), M=M)
+y = cal__y(input, np.array(h), M=M)
 # -
 
 # Explore
