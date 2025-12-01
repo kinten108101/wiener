@@ -3,7 +3,7 @@ def cal__gamma_d(desired, input, *, M):
   for l in range(M):
     acc = 0.0
     for n in range(l, M):
-      acc = acc + desired[n] * input[n - l]
+      acc += desired[n] * input[n - l]
     gamma_d[l] = acc / (M - l)
   return gamma_d
 
