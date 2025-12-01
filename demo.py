@@ -32,4 +32,5 @@ y = cal__y(input, np.array(h), M=M)
 
 print(f"{sigma2=}\n{gamma_d=}\n{Rm=}\n{Rm_=}\n{h=}\n{gamma_h_gamma=}\n{y=}\n{mmse=}")
 
-
+# Filtered output: 0.9 0.1 0.2 0.7 1.3 0.1 1.6 3.1 1.4 1.5
+# MMSE: 9.4
