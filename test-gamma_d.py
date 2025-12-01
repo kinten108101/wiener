@@ -4,7 +4,7 @@ def cal__gamma_d(desired, input, *, M):
     acc = 0.0
     for n in range(l, M):
       acc += desired[n] * input[n - l]
-    gamma_d[l] = acc / (M - l)
+    gamma_d[l] = acc / M
   return gamma_d
 
 if __name__ == "__main__":

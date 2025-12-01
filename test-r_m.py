@@ -8,7 +8,7 @@ def cal__r_m(input, *, M):
       acc = 0.0
       for n in range(startrange, M):
         acc += input[n - startrange] * input[n]
-      Rm[k, l] = acc / (M - startrange)
+      Rm[k, l] = acc / M
   return Rm
 
 if __name__ == "__main__":
