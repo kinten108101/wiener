@@ -3,10 +3,54 @@
 import numpy as np
 from numpy import matmul as matmul
 from numpy.linalg import inv as inv
-from test_expectation import expectation
-from test_gamma_d import cal__gamma_d
-from test_y import cal__y
-from test_r_m import cal__r_m
+
+def cal__y(input, h, *, M):
+  y = [None for _ in range(M)]
+  for n in range(M):
+    acc = 0.0
+    for k in range(n + 1):
+      acc += float(h[k]) * float(input[M - k - 1])
+    y[n] = acc
+  return y
+
+def cal__r_m(input, *, M):
+  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
+  for k in range(M):
+    for l in range(M):
+      startrange = abs(l - k)
+      acc = 0.0
+      for n in range(startrange, M):
+        acc += input[n - startrange] * input[n]
+      Rm[k, l] = acc / M
+  return Rm
+
+def cal__gamma_d(desired, input, *, M):
+  gamma_d = [None for _ in range(M)]
+  for l in range(M):
+    acc = 0.0
+    for n in range(l, M):
+      acc += desired[n] * input[n - l]
+    gamma_d[l] = acc / M
+  return gamma_d
+
+def expectation_squared(h, *, M):
+  acc = 0.0
+  for i in range(M):
+    acc += h[i]*h[i]
+  return acc / M
+
+def expectation_(h, *, M):
+  acc = 0.0
+  for i in range(M):
+    acc += h[i]
+  mean = acc / M
+  acc = 0.0
+  for i in range(M):
+    acc += (h[i] - mean)**2
+  return acc / M
+
+expectation = expectation_squared
+# -
 
 # Main execution
 
