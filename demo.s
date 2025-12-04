@@ -27,7 +27,7 @@ buffer_output:  .space 512  # save the string of float array
 float0:         .float 0.0
 f_constM:       .float 10.0
 epsilon: 		.float 1e-12
-input_file:     .asciiz "/home/kinten/u/wiener/data/input.txt"	
+input_file:     .asciiz "/home/kinten/u/wiener/data/inout/input9.txt"	
 desired_file:   .asciiz "/home/kinten/u/wiener/data/desired.txt"
 output_file:    .asciiz "/home/kinten/u/wiener/data/output.txt"
 msg_done:       .asciiz "Files loaded successfully.\n"

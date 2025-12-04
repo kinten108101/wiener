@@ -74,8 +74,12 @@ expectation = expectation_squared
 # Main execution
 
 # +
-input   = [3.2, 2.8, 5.9, -2.3, -0.3, -8.3, 1.0, 9.1, 4.6, 5.6]
-desired = [0.0, 3.6, 4.6, 2.3, -1.0, -2.3, -0.3, 3.5, 6.3, 6.0]
+with open("./data/inout/input9.txt", "r") as f:
+  line = f.readline()
+  input = [float(x) for x in line.split(' ')]
+with open("./data/desired.txt", "r") as f:
+  line = f.readline()
+  desired = [float(x) for x in line.split(' ')]
 
 M = 10
 
