@@ -87,7 +87,7 @@ sigma2 = expectation(desired, M=M)
 gamma_d = calc__gamma_d(desired, input, M=M)
 gamma_d = np.matrix(gamma_d, dtype=np.float32)
 gamma_d = gamma_d.T
-Rm  = cal__r_m(input, M=M)
+Rm  = calc__r_m(input, M=M)
 Rm_ = inv(Rm)
 h = matmul(Rm_, gamma_d)
 gamma_h_gamma = matmul(gamma_d.T, h)[0, 0]
