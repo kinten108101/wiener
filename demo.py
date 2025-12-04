@@ -13,25 +13,44 @@ def calc__y(input, h, *, M):
     y[n] = acc
   return y
 
-def cal__r_m(input, *, M):
-  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
-  for k in range(M):
-    for l in range(M):
-      startrange = abs(l - k)
-      acc = 0.0
-      for n in range(startrange, M):
-        acc += input[n - startrange] * input[n]
-      Rm[k, l] = acc / M
-  return Rm
+def __autocorr_gamma_xx(x, *, M):
+  x = np.array(x, dtype=float)
+  gamma = np.zeros(M)
 
-def cal__gamma_d(desired, input, *, M):
-  gamma_d = [None for _ in range(M)]
+  for m in range(M):
+    s = 0.0
+    for n in range(m, M):
+      s += x[n] * x[n - m]
+    gamma[m] = s / M
+  return gamma
+
+def calc__r_m(x, *, M):
+  x = np.array(x, dtype=float)
+  M = len(x)
+
+  gamma = __autocorr_gamma_xx(x, M=M)
+  R = np.zeros((M, M))
+
   for l in range(M):
-    acc = 0.0
+    for k in range(M):
+      lag = abs(l - k)     
+      R[l, k] = gamma[lag]
+  return R
+
+def calc__gamma_d(d, x, *, M):
+  import numpy as np
+  d = np.array(d, dtype=float)
+  x = np.array(x, dtype=float)
+  M = len(d)
+    
+  gamma = np.zeros(M)
+
+  for l in range(M):
+    s = 0
     for n in range(l, M):
-      acc += desired[n] * input[n - l]
-    gamma_d[l] = acc / M
-  return gamma_d
+      s += d[n] * x[n - l]
+    gamma[l] = s / M
+  return gamma.reshape(M, 1).T
 
 def expectation_squared(h, *, M):
   acc = 0.0
@@ -61,7 +80,7 @@ desired = [0.0, 3.6, 4.6, 2.3, -1.0, -2.3, -0.3, 3.5, 6.3, 6.0]
 M = 10
 
 sigma2 = expectation(desired, M=M)
-gamma_d = cal__gamma_d(desired, input, M=M)
+gamma_d = calc__gamma_d(desired, input, M=M)
 gamma_d = np.matrix(gamma_d, dtype=np.float32)
 gamma_d = gamma_d.T
 Rm  = cal__r_m(input, M=M)
@@ -69,7 +88,7 @@ Rm_ = inv(Rm)
 h = matmul(Rm_, gamma_d)
 gamma_h_gamma = matmul(gamma_d.T, h)[0, 0]
 mmse = sigma2 - gamma_h_gamma
-y = cal__y(input, np.array(h), M=M)
+y = calc__y(input, np.array(h), M=M)
 # -
 
 # Explore

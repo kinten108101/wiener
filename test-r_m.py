@@ -1,43 +1,31 @@
 import numpy as np
 
-def cal__r_m(input, *, M):
-  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
-  for k in range(M):
-    for l in range(M):
-      startrange = abs(l - k)
-      acc = 0.0
-      for n in range(startrange, M):
-        acc += input[n - startrange] * input[n]
-      Rm[k, l] = acc / M
-  return Rm
+def __autocorr_gamma_xx(x, *, M):
+  x = np.array(x, dtype=float)
+  gamma = np.zeros(M)
 
-def _cal__r_m1(input, *, M):
-  import numpy as np
-  a = np.array(input)
-  v = np.array(input)
-  m = np.correlate(a, v, mode='full')[:M]
-  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
-  for i in range(M):
-    m_ = np.roll(m, -i)
-    for j in range(M):
-      Rm[i, j] = m_[j]
-  return Rm
+  for m in range(M):
+    s = 0.0
+    for n in range(m, M):
+      s += x[n] * x[n - m]
+    gamma[m] = s / M
+  return gamma
 
-def _cal__r_m2(input, *, M):
-  import numpy as np
-  from scipy.linalg import toeplitz
-  x = np.array(input)
-  m = toeplitz(np.pad(x, (0, len(x) - 1), mode='constant'), np.pad([x[0]], (0, len(x) - 1), mode='constant')) @ x[::-1]
-  m = m[:M]
-  Rm = np.matrix([[None for _ in range(M)] for _ in range(M)], dtype=np.float32)
-  for i in range(M):
-    m_ = np.roll(m, -i)
-    for j in range(M):
-      Rm[i, j] = m_[j]
-  return Rm
+def cal__r_m(x, *, M):
+  x = np.array(x, dtype=float)
+  M = len(x)
+
+  gamma = __autocorr_gamma_xx(x, M=M)
+  R = np.zeros((M, M))
+
+  for l in range(M):
+    for k in range(M):
+      lag = abs(l - k)     
+      R[l, k] = gamma[lag]
+  return R
 
 if __name__ == "__main__":
-  input = [4.0, 5.2, 6.5]
-  Rm = cal__r_m(input, M=3)
-  print(f"input: {input}")
-  print(f"output:\n{Rm}")
+  x = [3.2, 2.8, 5.9, -2.3, -0.3, -8.3, 1.0, 9.1, 4.6, 5.6]
+  rm = cal__r_m(x, M=10)
+  print(f"input:  {x}")
+  print(f"output: {rm}")

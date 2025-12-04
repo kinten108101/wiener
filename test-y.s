@@ -1,15 +1,15 @@
 .data
 	float0:         .float 0.0
-	f_constM:       .float 3.0
-	input:          .float 1.0, 2.0, 3.0
-	h:              .float 4.0, 5.2, 6.5
-	y:              .space 12
+	f_constM:       .float 10.0
+	input: .float 3.2, 2.8, 5.9, -2.3, -0.3, -8.3, 1.0, 9.1, 4.6, 5.6
+	h:              .float 0.33709744, 0.38910022, 0.17019221, -0.16845231, -0.02934894, 0.19211298, -0.007419303, -0.0066480916, 0.023330953, 0.039674878
+	y:              .space 40
 	msg_input:      .asciiz "input x(n): "
 	msg_h:          .asciiz "input h(n): "
 	msg_output:     .asciiz "output: "
 .text
 .globl main
-	li $s0, 3      # M=3, CONSTANT FOR THE PROGRAM
+	li $s0, 10      # M=10, CONSTANT FOR THE PROGRAM
 main:
 
 	### y(n)
@@ -26,9 +26,9 @@ y_k_loop:
 	add $t9, $t9, $t2
 	lwc1 $f4, 0($t9)		# -> h(k)
 	la $t9, input
-	addi $t7, $t1, 1
-	sub $t2, $s0, $t7       # n - k - 1
-	sll $t2, $t2, 2
+	sub $t2, $s0, $t1       # n - k
+	addi $t2, $t2, -1
+    sll $t2, $t2, 2
 	add $t9, $t9, $t2
 	lwc1 $f5, 0($t9)		# -> x(n-k)
 	mul.s $f6, $f4, $f5

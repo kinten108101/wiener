@@ -1,13 +1,13 @@
 .data
 	float0:         .float 0.0
-	f_constM:       .float 3.0
-	input:          .float 4.0, 5.2, 6.5
-	Rm:             .space 36
+	f_constM:       .float 10.0
+	input:          .float 3.2, 2.8, 5.9, -2.3, -0.3, -8.3, 1.0, 9.1, 4.6, 5.6
+	Rm:             .space 400
 	msg_input:      .asciiz "input: "
 	msg_output:     .asciiz "output:\n"
 .text
 .globl main
-	li $s0, 3      # M=3, CONSTANT FOR THE PROGRAM
+	li $s0, 10      # M=10, CONSTANT FOR THE PROGRAM
 main:
 	### Rm ###
 	la $t2, input
@@ -81,7 +81,6 @@ print_in_a_loop_end:
 exit:
 	li $v0, 10
 	syscall
-
 R_M_loop_k:
 	# Calculate RM
 	# Loop k 0 -> M - 1
@@ -121,7 +120,7 @@ R_M_loop_n_done:
 	abs $t4, $t4
 	mtc1 $t4, $f4
 	cvt.s.w $f4, $f4
-	sub.s $f1, $f1, $f4
+	# sub.s $f1, $f1, $f4
 	div.s $f0, $f0, $f1
 	add $t7, $zero, $t3
     move $t8, $s0
@@ -141,4 +140,5 @@ R_M_done:
 	la $t2, input
 	la $t6, Rm
 	l.s $f0, float0
-	jr $ra
+    jr $ra
+
