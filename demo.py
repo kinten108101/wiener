@@ -4,7 +4,7 @@ import numpy as np
 from numpy import matmul as matmul
 from numpy.linalg import inv as inv
 
-def cal__y(input, h, *, M):
+def calc__y(input, h, *, M):
   y = [None for _ in range(M)]
   for n in range(M):
     acc = 0.0
