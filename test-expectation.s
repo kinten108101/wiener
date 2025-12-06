@@ -11,7 +11,8 @@ main:
 	la $t1, desired
 	li $t0, 0
 	l.s $f0, float0
-	jal sum
+	jal sum_square
+	mov.s $f11, $f10
 	
 	la $a0, msg_input
 	li $v0, 4
@@ -53,6 +54,22 @@ exit:
 	li $v0, 10
 	syscall
 
+sum_square:
+	# Calculate sum of square of desired array
+	bge $t0, $s0, var_done
+	lwc1 $f1, 0($t1)
+	mul.s $f1, $f1, $f1
+	add.s $f0, $f0, $f1
+	addiu $t1, $t1, 4
+	addiu $t0, $t0, 1
+	j sum_square
+var_done:
+	# Calculate variance without mean of desired array
+	l.s $f1, f_constM
+	div.s $f10, $f0, $f1 		# f10 = variance without mean
+	l.s $f0, float0
+	li $t0, 0
+	la $t1, desired
 sum:
 	# Calculate sum of desired array
 	bge $t0, $s0, mean
